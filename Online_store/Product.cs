@@ -23,6 +23,12 @@ namespace Online_store
             Price = price;
             Quantity = quantity;
         }
+
+        public void LinkCategoryManufacturer(Category category, Manufacturer manufacturer)
+        {
+            this.ProductCategory = category;
+            this.ProductManufacturer = manufacturer;
+        }
     }
 }
 

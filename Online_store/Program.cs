@@ -33,27 +33,17 @@ namespace Online_store
             Product product10 = new Product(10, "Galaxy Book3 Ultra", 2, 3, 139999.00, 10);
 
             // Linking categories and manufacturers to a product
-            product1.ProductCategory = category1;
-            product1.ProductManufacturer = manufacturer1;
-            product2.ProductCategory = category2;
-            product2.ProductManufacturer = manufacturer2;
-            product3.ProductCategory = category3;
-            product3.ProductManufacturer = manufacturer3;
-            product4.ProductCategory = category1;
-            product4.ProductManufacturer = manufacturer4;
-            product5.ProductCategory = category2;
-            product5.ProductManufacturer = manufacturer1;
-            product6.ProductCategory = category3;
-            product6.ProductManufacturer = manufacturer2;
-            product7.ProductCategory = category1;
-            product7.ProductManufacturer = manufacturer3;
-            product8.ProductCategory = category2;
-            product8.ProductManufacturer = manufacturer4;
-            product9.ProductCategory = category3;
-            product9.ProductManufacturer = manufacturer1;
-            product10.ProductCategory = category1;
-            product10.ProductManufacturer = manufacturer2;
-
+            product1.LinkCategoryManufacturer(category1, manufacturer1);
+            product2.LinkCategoryManufacturer(category2, manufacturer2);            
+            product3.LinkCategoryManufacturer(category3, manufacturer3);            
+            product4.LinkCategoryManufacturer(category1, manufacturer4);            
+            product5.LinkCategoryManufacturer(category2, manufacturer1);            
+            product6.LinkCategoryManufacturer(category3, manufacturer2);            
+            product7.LinkCategoryManufacturer(category1, manufacturer3);            
+            product8.LinkCategoryManufacturer(category2, manufacturer4);            
+            product9.LinkCategoryManufacturer(category3, manufacturer1);            
+            product10.LinkCategoryManufacturer(category1, manufacturer2);            
+            
             // Add to collections
             dbContext.Categories.Add(category1);
             dbContext.Categories.Add(category2);
