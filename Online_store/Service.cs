@@ -291,5 +291,13 @@ namespace Online_store
                 Console.WriteLine("------------------------------------------");
             }
         }
+
+        // Method for calculating the quantity of goods by category
+        public int GetTotalQuantityInCategory(string categoryName)
+        {
+            return dbContext.Products
+                .Where(product => product.Value.ProductCategory.Name == categoryName)
+                .Sum(product => product.Value.Quantity);
+        }
     }
 }

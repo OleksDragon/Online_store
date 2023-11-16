@@ -10,9 +10,9 @@ namespace Online_store
             Service? service = new Service(dbContext);
 
             // Creating categories
-            Category category1 = new Category(1, "Телефоны");
-            Category category2 = new Category(2, "Планшеты");
-            Category category3 = new Category(3, "Ноутбуки");
+            Category category1 = new Category(1, "Phones");
+            Category category2 = new Category(2, "Tablets");
+            Category category3 = new Category(3, "Laptops");
 
             // Creation of producers
             Manufacturer manufacturer1 = new Manufacturer(1, "Apple");
@@ -213,9 +213,21 @@ namespace Online_store
                     case "10": // Analysis of store functionality
                         Console.WriteLine("Analysis of store functionality:");
                         Console.WriteLine("------------------------------------------");
-                        Console.WriteLine($"Количество категорий товаров: {dbContext.Categories.Count}");
-                        Console.WriteLine($"Количество производителей: {dbContext.Manufacturers.Count}");
-                        Console.WriteLine($"Общее количество товаров на складе: {dbContext.Products.Count}");
+                        Console.WriteLine($"Number of product categories: {dbContext.Categories.Count}");
+                        Console.WriteLine($"Number of manufacturers: {dbContext.Manufacturers.Count}");
+                        Console.WriteLine($"Number of items in stock: {dbContext.Products.Count}");
+                        int totalQuantity = dbContext.Products.Sum(p => p.Value.Quantity);
+                        Console.WriteLine($"Total quantity of goods in stock: {totalQuantity}");
+                        
+                        int totalQuantityInCategory = service.GetTotalQuantityInCategory("Phones");
+                        Console.WriteLine($"Total quantity of goods in the \"Phones\" category in stock: {totalQuantityInCategory}");
+
+                        totalQuantityInCategory = service.GetTotalQuantityInCategory("Tablets");
+                        Console.WriteLine($"Total quantity of goods in the \"Tablets\" category in stock: {totalQuantityInCategory}");
+
+                        totalQuantityInCategory = service.GetTotalQuantityInCategory("Laptops");
+                        Console.WriteLine($"Total quantity of goods in the \"Laptops\" category in stock: {totalQuantityInCategory}");
+
                         Console.ReadKey();
                         Console.Clear();
                         break;
