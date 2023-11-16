@@ -78,8 +78,11 @@ namespace Online_store
             Console.Write("Price: ");
             double price = double.Parse(Console.ReadLine());
 
+            Console.Write("Quantity: ");
+            int quantity = int.Parse(Console.ReadLine());
+
             // Creating a new product
-            Product newProduct = new Product(productId, productName, manufacturerId, categoryId, price);
+            Product newProduct = new Product(productId, productName, manufacturerId, categoryId, price, quantity);
 
             // Search for a manufacturer by ID and add it to a new product
             var manufacturer = dbContext.Manufacturers.FirstOrDefault(m => m.ManufacturerId == manufacturerId);
@@ -140,6 +143,7 @@ namespace Online_store
             Console.WriteLine($"Product ID: {product.ProductId}");
             Console.WriteLine($"Product Name: {product.ProductName}");
             Console.WriteLine($"Price: {product.Price}");
+            Console.WriteLine($"Quantity: {product.Quantity}");
 
             // Вывод информации о категории
             if (product.ProductCategory != null && product.ProductCategory.Name != null)
@@ -173,6 +177,7 @@ namespace Online_store
                 Console.WriteLine($"Manufacturer: {product.ProductManufacturer.Name}");
                 Console.WriteLine($"Name: {product.ProductName}");
                 Console.WriteLine($"Price: {product.Price}");
+                Console.WriteLine($"Quantity: {product.Quantity}");
                 Console.WriteLine("------------------------------------------");
             }
         }
@@ -187,49 +192,70 @@ namespace Online_store
                 // Checking the availability of goods with the specified ID
                 if (dbContext.Products.ContainsKey(productIdForPurchase))
                 {
-                    Customer newCustomer = new Customer();
+                    Product productToPurchase = dbContext.Products[productIdForPurchase];
 
-                    Console.Write("Enter your name: ");
-                    newCustomer.FirstName = Console.ReadLine();
-
-                    Console.Write("Enter your last name: ");
-                    newCustomer.LastName = Console.ReadLine();
-
-                    Console.Write("Enter your phone number: ");
-                    newCustomer.Phone = Console.ReadLine();
-
-                    // Checking existing clients by last name and phone number
-                    Customer existingCustomer = dbContext.Customers.Values.FirstOrDefault(c => c.LastName == newCustomer.LastName && c.Phone == newCustomer.Phone);
-
-                    int customerIdForPurchase;
-
-                    if (existingCustomer != null)
+                    // Checking if the product is available
+                    if (productToPurchase.Quantity > 0)
                     {
-                        customerIdForPurchase = existingCustomer.CustomerId;
-                        Console.WriteLine("You already exist in the system. Your ID: " + customerIdForPurchase);
+                        Console.Write($"Available quantity: {productToPurchase.Quantity}. Enter quantity to purchase: ");
+                        if (int.TryParse(Console.ReadLine(), out int quantityToPurchase) && quantityToPurchase > 0 && quantityToPurchase <= productToPurchase.Quantity)
+                        {
+                            Customer newCustomer = new Customer();
+
+                            Console.Write("Enter your name: ");
+                            newCustomer.FirstName = Console.ReadLine();
+
+                            Console.Write("Enter your last name: ");
+                            newCustomer.LastName = Console.ReadLine();
+
+                            Console.Write("Enter your phone number: ");
+                            newCustomer.Phone = Console.ReadLine();
+
+                            // Checking existing clients by last name and phone number
+                            Customer existingCustomer = dbContext.Customers.Values.FirstOrDefault(c => c.LastName == newCustomer.LastName && c.Phone == newCustomer.Phone);
+
+                            int customerIdForPurchase;
+
+                            if (existingCustomer != null)
+                            {
+                                customerIdForPurchase = existingCustomer.CustomerId;
+                                Console.WriteLine("You already exist in the system. Your ID: " + customerIdForPurchase);
+                            }
+                            else
+                            {
+                                newCustomer.CustomerId = customerIdCounter++;
+                                customerIdForPurchase = newCustomer.CustomerId;
+
+                                // Adding a new client to the database (dbContext)
+                                dbContext.Customers.Add(newCustomer.CustomerId, newCustomer);
+                            }
+
+                            Order newOrder = new Order();
+
+                            // Filling out order data
+                            newOrder.OrderId = orderIdCounter++;
+                            newOrder.ProductId = productIdForPurchase;
+                            newOrder.CustomerId = customerIdForPurchase;
+
+                            Console.Write("Enter delivery address: ");
+                            newOrder.ShippingAddress = Console.ReadLine();
+
+                            // Reducing the quantity of the purchased product
+                            productToPurchase.Quantity -= quantityToPurchase;
+
+                            // Adding a new order to the database (dbContext)
+                            dbContext.Orders.Enqueue(newOrder);
+                            Console.WriteLine("The order has been successfully completed.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid quantity or insufficient stock.");
+                        }
                     }
                     else
                     {
-                        newCustomer.CustomerId = customerIdCounter++;
-                        customerIdForPurchase = newCustomer.CustomerId;
-
-                        // Adding a new client to the database (dbContext)
-                        dbContext.Customers.Add(newCustomer.CustomerId, newCustomer);
+                        Console.WriteLine("The product is out of stock.");
                     }
-
-                    Order newOrder = new Order();
-
-                    // Filling out order data
-                    newOrder.OrderId = orderIdCounter++;
-                    newOrder.ProductId = productIdForPurchase;
-                    newOrder.CustomerId = customerIdForPurchase;
-
-                    Console.Write("Enter delivery address: ");
-                    newOrder.ShippingAddress = Console.ReadLine();
-
-                    // Adding a new order to the database (dbContext)
-                    dbContext.Orders.Enqueue(newOrder);
-                    Console.WriteLine("The order has been successfully completed.");
                 }
                 else
                 {

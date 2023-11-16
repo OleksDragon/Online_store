@@ -9,17 +9,19 @@ namespace Online_store
         public int ManufacturerId { get; set; }
         public string? ProductName { get; set; }
         public double Price { get; set; }
+        public int Quantity {  get; set; }
 
         public Category ProductCategory { get; set; }
         public Manufacturer ProductManufacturer { get; set; }
 
-        public Product(int productId, string? productName, int manufacturerId, int categoryId, double price)
+        public Product(int productId, string? productName, int manufacturerId, int categoryId, double price, int quantity)
         {
             ProductId = productId;
             ProductName = productName;
             ManufacturerId = manufacturerId;
             CategoryId = categoryId;
             Price = price;
+            Quantity = quantity;
         }
     }
 }

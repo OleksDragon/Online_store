@@ -21,16 +21,16 @@ namespace Online_store
             Manufacturer manufacturer4 = new Manufacturer(4, "ASUS");
 
             // Product creation
-            Product product1 = new Product(1, "iPhone 14 Pro Max", 1, 1, 53499.00);
-            Product product2 = new Product(2, "Galaxy Tab S9", 2, 2, 69999.00);
-            Product product3 = new Product(3, "13T Pro", 3, 1, 35999.00);
-            Product product4 = new Product(4, "ROG Zephyrus Duo 16", 4, 3, 165999.00);
-            Product product5 = new Product(5, "Galaxy Fold5", 2, 1, 86999.00);
-            Product product6 = new Product(6, "iPad Pro 11", 1, 2, 102999.00);
-            Product product7 = new Product(7, "MacBook Pro 16", 1, 3, 228999.00);
-            Product product8 = new Product(8, "Zenbook Pro 14 Duo", 4, 3, 99999.50);
-            Product product9 = new Product(9, "Mi RedmiBook 15", 3, 3, 21999.00);
-            Product product10 = new Product(10, "Galaxy Book3 Ultra", 2, 3, 139999.00);
+            Product product1 = new Product(1, "iPhone 14 Pro Max", 1, 1, 53499.00, 10);
+            Product product2 = new Product(2, "Galaxy Tab S9", 2, 2, 69999.00, 10);
+            Product product3 = new Product(3, "13T Pro", 3, 1, 35999.00, 10);
+            Product product4 = new Product(4, "ROG Zephyrus Duo 16", 4, 3, 165999.00, 10);
+            Product product5 = new Product(5, "Galaxy Fold5", 2, 1, 86999.00, 10);
+            Product product6 = new Product(6, "iPad Pro 11", 1, 2, 102999.00, 10);
+            Product product7 = new Product(7, "MacBook Pro 16", 1, 3, 228999.00, 10);
+            Product product8 = new Product(8, "Zenbook Pro 14 Duo", 4, 3, 99999.50, 10);
+            Product product9 = new Product(9, "Mi RedmiBook 15", 3, 3, 21999.00, 10);
+            Product product10 = new Product(10, "Galaxy Book3 Ultra", 2, 3, 139999.00, 10);
 
             // Linking categories and manufacturers to a product
             product1.ProductCategory = category1;
